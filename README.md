@@ -38,3 +38,7 @@ pnpm run test:e2e
 # test coverage
 pnpm run test:cov
 ```
+
+## Swagger
+
+[http://localhost:8000/api/docs](http://localhost:8000/api/docs)
