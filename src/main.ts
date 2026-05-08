@@ -11,6 +11,8 @@ async function bootstrap() {
     forbidNonWhitelisted: true,
   }))
 
+  app.setGlobalPrefix('api');
+
   //Swagger setup
   const config = new DocumentBuilder()
     .setTitle('DT Money API')
@@ -20,11 +22,13 @@ async function bootstrap() {
     .build();
   
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('api', app, document);
+  SwaggerModule.setup('docs', app, document, {
+    useGlobalPrefix: true,
+  });
 
   
   // habilitar cors
   app.enableCors();
-  await app.listen(process.env.PORT ?? 3333);
+  await app.listen(process.env.PORT ?? 8000);
 }
 bootstrap();
