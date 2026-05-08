@@ -1,0 +1,7 @@
+POSTGRES_USER=postgres
+POSTGRES_PASSWORD=123456
+POSTGRES_DB=dt-money
+
+DATABASE_URL="postgresql://postgres:123456@localhost:5432/dt-money?schema=public"
+
+PORT=8000
