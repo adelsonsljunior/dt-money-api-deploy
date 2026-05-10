@@ -15,7 +15,7 @@ export class CreateUserController {
   @ApiBody({ type: CreateUserDTO })
   @ApiResponse({ status: 201, type: IdResponseDTO, description: 'Usuário criado com sucesso' })
   @ApiResponse({ status: 400, description: 'Dados inválidos' })
-  @ApiResponse({ status: 409, description: 'Usuário já existe' })
+  @ApiResponse({ status: 409, description: 'E-mail já existe' })
   @ApiResponse({ status: 500, description: 'Erro interno do servidor' })
   async createUser(@Body() data: CreateUserDTO) {
     return await this.createUserService.execute(data);

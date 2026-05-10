@@ -1,5 +1,5 @@
 import { Body, Controller, HttpCode, Param, Patch } from "@nestjs/common";
-import { ApiTags } from "@nestjs/swagger";
+import { ApiResponse, ApiTags } from "@nestjs/swagger";
 import { UpdateUserService } from "../services/update-user.service";
 import { UpdateUserDTO } from "../dto/request";
 
@@ -12,7 +12,12 @@ export class UpdateUserController {
 
   @Patch('/:id')
   @HttpCode(204)
-  async updateUser(@Param('id') id: string, @Body() data: UpdateUserDTO){
+  @ApiResponse({ status: 204, description: 'Usuário atualizado com sucesso' })
+  @ApiResponse({ status: 400, description: 'Dados inválidos' })
+  @ApiResponse({ status: 404, description: 'Usuário não encontrado' })
+  @ApiResponse({ status: 409, description: 'E-mail já existe' })
+  @ApiResponse({ status: 500, description: 'Erro interno do servidor' })
+  async updateUser(@Param('id') id: string, @Body() data: UpdateUserDTO) {
     this.updateUserService.execute(data, id)
   }
 }
