@@ -1,3 +1,5 @@
+import bcrypt from 'bcrypt';
+
 import { ConflictException, Injectable, NotFoundException } from "@nestjs/common";
 import { IUserRepository } from "../infra/repositories/user.repository.abstract";
 import { UpdateUserDTO } from "../dto/request";
@@ -10,9 +12,15 @@ export class UpdateUserService {
     const user = await this.userRepository.findById(id);
     if (!user) throw new NotFoundException('User not found');
 
-    if (data.email && user.email !== data.email) {
+    if (data.email) {
       const userByEmail = await this.userRepository.findByEmail(data.email)
-      if (userByEmail) throw new ConflictException('Email already exists');
+      if (userByEmail && userByEmail.id !== id) throw new ConflictException('Email already exists');
+    }
+
+    if (data.password) {
+      const saltRounds = 10;
+      const hashedPassword = await bcrypt.hash(data.password, saltRounds);
+      data.password = hashedPassword;
     }
 
     await this.userRepository.update(data, id);

@@ -18,6 +18,6 @@ export class UpdateUserController {
   @ApiResponse({ status: 409, description: 'E-mail já existe' })
   @ApiResponse({ status: 500, description: 'Erro interno do servidor' })
   async updateUser(@Param('id') id: string, @Body() data: UpdateUserDTO) {
-    this.updateUserService.execute(data, id)
+    await this.updateUserService.execute(data, id)
   }
 }
